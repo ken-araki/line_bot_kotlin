@@ -1,7 +1,6 @@
 package com.linebot.model.qiita;
 
 import com.linebot.model.common.RequestParameter;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,13 @@ import org.springframework.util.MultiValueMap;
 @Component
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class QiitaRequestParameter implements RequestParameter {
+    public QiitaRequestParameter(Integer page, Integer perPage) {
+        this.page = page;
+        this.perPage = perPage;
+    }
+
     private Integer page;
     private Integer perPage;
 
