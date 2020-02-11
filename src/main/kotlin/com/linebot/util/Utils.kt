@@ -53,6 +53,46 @@ class Utils {
 
         }
 
+        // kotlin用のuncheck
+        // kotlinではチェック例外がない(チェックさせるには@Throwが必要)ため、FunctionalInterfaceを必要としない
+        // これらをJavaで呼び出そうとするとコンパイルエラーとなるため、元のメソッドを残しジェネリクスで明示的に↑を呼び出す
+
+        @JvmStatic
+        fun uncheck(runnable: () -> Void) {
+            try {
+                runnable()
+            } catch (e: Exception) {
+                throw RuntimeException(e)
+            }
+        }
+
+        @JvmStatic
+        fun <T> uncheck(supplier: () -> T): T {
+            try {
+                return supplier()
+            } catch (e: Exception) {
+                throw RuntimeException(e)
+            }
+        }
+
+        @JvmStatic
+        fun <T, R> uncheck(t: T, function: (T) -> R): R {
+            try {
+                return function(t)
+            } catch (e: Exception) {
+                throw RuntimeException(e)
+            }
+        }
+
+        @JvmStatic
+        fun <T> uncheck(t: T, consumer: (T) -> Void) {
+            try {
+                consumer(t)
+            } catch (e: Exception) {
+                throw RuntimeException(e)
+            }
+        }
+
         @JvmStatic
         fun now(): Timestamp {
             return Timestamp(System.currentTimeMillis())

@@ -16,4 +16,9 @@ public class PropertiesConfig {
     private String id;
     private String ownHost;
     private String ownPort;
+
+    // kotlinからgetterが見れないので、一時的にgetterを提供する
+    public String getId() { return this.id; }
+    public String getOwnHost() { return this.ownHost; }
+    public String getOwnPort() { return this.ownPort; }
 }
