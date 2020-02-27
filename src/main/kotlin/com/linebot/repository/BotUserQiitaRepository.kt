@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface BotUserQiitaRepository : JpaRepository<BotUserQiita, Long> {
-    fun findByDeleted(deleted: String): List<BotUserQiita>
     fun findByUserId(userId: String): BotUserQiita
 }

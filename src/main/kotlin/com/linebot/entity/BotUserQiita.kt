@@ -35,14 +35,13 @@ data class BotUserQiita(
         private var deleted: String? = null
         private var createdDate: Date? = null
 
-        fun build(): BotUserQiita {
-            val b = BotUserQiita()
-            b.userId = userId
-            b.qiitaUserId = qiitaUserId
-            b.deleted = deleted ?: "0"
-            b.createdDate = createdDate
-            return b
-        }
+        fun build(): BotUserQiita = BotUserQiita(
+                userId = userId,
+                qiitaUserId = qiitaUserId,
+                deleted = deleted ?: "0",
+                createdDate = createdDate
+        )
+
         fun userId(userId: String) = apply { this.userId = userId }
         fun qiitaUserId(qiitaUserId: String) = apply { this.qiitaUserId = qiitaUserId }
         fun deleted(deleted: String) = apply { this.deleted = deleted }

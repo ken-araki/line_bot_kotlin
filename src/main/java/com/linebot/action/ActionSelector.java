@@ -18,10 +18,17 @@ public enum ActionSelector {
     QIITA_ITEM_LIST("qiita記事一覧取得", Arrays.asList("qiitaItemAction")),
     ORDER("要望・バグ", Arrays.asList("orderInputAction", "orderAction"));
 
-    @Getter
     private String startWord;
-    @Getter
     private List<String> actionList;
+
+    // kotlin 用にgetterを用意する
+    public String getStartWord() {
+        return this.startWord;
+    }
+
+    public List<String> getActionList() {
+        return this.actionList;
+    }
 
     @Nullable
     public static ActionSelector getByStartWord(@NotNull String message) {

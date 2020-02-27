@@ -3,6 +3,8 @@ package com.linebot.action.traindelay;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @AllArgsConstructor
 public enum TrainDelayTime {
     EXEC_07_00("7:00", 7, 0),
@@ -15,12 +17,20 @@ public enum TrainDelayTime {
     EXEC_09_20("9:20", 9, 20),
     EXEC_09_40("9:40", 9, 40);
 
-    @Getter
     private String time;
-
-    @Getter
     private int hour;
-
-    @Getter
     private int minute;
+
+    // kotlin 用にgetterを用意する
+    public String getTime() {
+        return this.time;
+    }
+
+    public int getHour() {
+        return this.hour;
+    }
+
+    public int getMinute() {
+        return this.minute;
+    }
 }
