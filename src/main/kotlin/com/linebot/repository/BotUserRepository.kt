@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface BotUserRepository : JpaRepository<BotUser, Long> {
     fun findByDeleted(deleted: String): List<BotUser>
-    fun findByUserId(userId: String): BotUser
+    fun findByUserId(userId: String): BotUser?
 }
