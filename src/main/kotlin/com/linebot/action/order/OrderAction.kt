@@ -6,12 +6,7 @@ import com.linebot.service.request.RequestService
 import com.linebot.util.Utils
 import com.linecorp.bot.model.message.Message
 import com.linecorp.bot.model.message.TextMessage
-import lombok.AllArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
-
-import javax.validation.constraints.NotNull
-import java.util.Collections
 
 @Component
 class OrderAction(

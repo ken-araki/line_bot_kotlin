@@ -6,17 +6,11 @@ import com.linebot.model.train.TrainDelay
 import com.linebot.repository.BotLogRepository
 import com.linebot.repository.TrainDelayLogRepository
 import com.linebot.util.Utils
-import lombok.AllArgsConstructor
-import lombok.extern.slf4j.Slf4j
-import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-import javax.validation.constraints.NotNull
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.stream.Collectors
 
-@AllArgsConstructor
 class LogService(
         private val botLogRepository: BotLogRepository,
         private val trainDelayLogRepository: TrainDelayLogRepository
