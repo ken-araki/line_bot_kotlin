@@ -6,11 +6,13 @@ import com.linebot.model.train.TrainDelay
 import com.linebot.repository.BotLogRepository
 import com.linebot.repository.TrainDelayLogRepository
 import com.linebot.util.Utils
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import java.time.LocalDateTime
 import java.time.ZoneId
 
+@Service
 class LogService(
         private val botLogRepository: BotLogRepository,
         private val trainDelayLogRepository: TrainDelayLogRepository
