@@ -23,28 +23,4 @@ data class BotUserQiita(
 
         @Column(name = "created_date")
         var createdDate: Date? = null
-) {
-    companion object {
-        @JvmStatic
-        fun builder(): BotUserQiitaBuilder = BotUserQiitaBuilder()
-    }
-
-    class BotUserQiitaBuilder {
-        private var userId: String? = null
-        private var qiitaUserId: String? = null
-        private var deleted: String? = null
-        private var createdDate: Date? = null
-
-        fun build(): BotUserQiita = BotUserQiita(
-                userId = userId,
-                qiitaUserId = qiitaUserId,
-                deleted = deleted ?: "0",
-                createdDate = createdDate
-        )
-
-        fun userId(userId: String) = apply { this.userId = userId }
-        fun qiitaUserId(qiitaUserId: String) = apply { this.qiitaUserId = qiitaUserId }
-        fun deleted(deleted: String) = apply { this.deleted = deleted }
-        fun createdDate(createdDate: Date) = apply { this.createdDate = createdDate }
-    }
-}
+)

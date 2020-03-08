@@ -37,45 +37,4 @@ data class BotLog(
 
         @Column(name = "exec_time")
         var execTime: Date? = null
-) {
-    companion object {
-        @JvmStatic
-        fun builder(): BotLogBuilder = BotLogBuilder()
-    }
-
-    class BotLogBuilder {
-        private var userId: String? = null
-        private var botActionName: String? = null
-        private var message: String? = null
-        private var yearMonth: String? = null
-        private var day: Int = 0
-        private var hour: Int = 0
-        private var minute: Int = 0
-        private var dayOfWeek: Int = 0
-        private var execTime: Date? = null
-
-        fun build(): BotLog {
-            return BotLog(
-                    userId = userId,
-                    botActionName = botActionName,
-                    message = message,
-                    yearMonth = yearMonth,
-                    day = day,
-                    hour = hour,
-                    minute = minute,
-                    dayOfWeek = dayOfWeek,
-                    execTime = execTime
-            )
-        }
-
-        fun userId(userId: String?) = apply { this.userId = userId }
-        fun botActionName(botActionName: String?) = apply { this.botActionName = botActionName }
-        fun message(message: String?) = apply { this.message = message }
-        fun yearMonth(yearMonth: String?) = apply { this.yearMonth = yearMonth }
-        fun day(day: Int) = apply { this.day = day }
-        fun hour(hour: Int) = apply { this.hour = hour }
-        fun minute(minute: Int) = apply { this.minute = minute }
-        fun dayOfWeek(dayOfWeek: Int) = apply { this.dayOfWeek = dayOfWeek }
-        fun execTime(execTime: Date?) = apply { this.execTime = execTime }
-    }
-}
+)
