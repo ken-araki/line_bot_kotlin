@@ -13,9 +13,8 @@ class TobuyConfirmAction(
 ) : Action() {
 
     override fun execute(userId: String, message: String): List<Message> {
-        val sb = StringBuilder("買い物リストはこちらです")
-        tobuyService.findByIsCompleted(userId, "0")
-                .forEach { sb.append(Utils.LINE_SEPARATOR + it.goods) }
-        return listOf(TextMessage(sb.toString()))
+        val tobuyList = tobuyService.findByIsCompleted(userId, "0")
+                .joinToString { Utils.LINE_SEPARATOR + it.goods }
+        return listOf(TextMessage("買い物リストはこちらです。$tobuyList"))
     }
 }

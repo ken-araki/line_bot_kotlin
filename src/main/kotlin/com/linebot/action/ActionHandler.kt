@@ -45,22 +45,14 @@ class ActionHandler(
             return executeStartAction(actionSelector, userId, message)
         }
 
-        val result = getStatus(userId).nextAction?.let { getAction(it) }
+        return getStatus(userId).nextAction
+                ?.let { getAction(it) }
                 ?.takeIf { it.check(message) }
                 ?.let {
-                    val result = execute(it, userId, message)
-                    userStatusCacheService.set(userId, UserStatus(userId, it.nextAction))
-                    result
-                } ?: emptyList()
-
-        if (result.isEmpty()) {
-            userStatusCacheService.delete(userId)
-            return listOf(
-                    TextMessage("このメッセージは受け付けられません。どの操作を実行するか選択してください"),
-                    flexMessageBuilder.buildStartWordMessage()
-            )
-        }
-        return result
+                    execute(it, userId, message).also { _ ->
+                        userStatusCacheService.set(userId, UserStatus(userId, it.nextAction))
+                    }
+                } ?: return handleError(userId)
     }
 
     private fun execute(action: Action, userId: String, message: String): List<Message> {
@@ -74,6 +66,14 @@ class ActionHandler(
         val result = execute(action, userId, message)
         userStatusCacheService.set(userId, UserStatus(userId, action.nextAction))
         return result
+    }
+
+    private fun handleError(userId: String): List<Message> {
+        userStatusCacheService.delete(userId)
+        return listOf(
+                TextMessage("このメッセージは受け付けられません。どの操作を実行するか選択してください"),
+                flexMessageBuilder.buildStartWordMessage()
+        )
     }
 
     private fun getStartAction(actionSelector: ActionSelector) = getAction(actionSelector.actionList.first())

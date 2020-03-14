@@ -22,20 +22,18 @@ class GetTrainDelayResourceService(
         val hour = now.hour
         val minute = now.minute
 
-        val sb = StringBuilder(128)
         val results = trainDelayClient.delay
-        results.takeIf { it.isNotEmpty() }
+                .also { logService.insertTrainDelay(it) }
+        val message = results.takeIf { it.isNotEmpty() }
                 ?.filter { it.name.isNullOrEmpty() }
-                ?.forEach { sb.append(Utils.LINE_SEPARATOR).append(it.name) }
-                ?: sb.append("遅延している沿線はありません。")
+                ?.joinToString { Utils.LINE_SEPARATOR + it.name }
+                ?: "遅延している沿線はありません。"
 
-        logService.insertTrainDelay(results)
-        val userIds = noticeService.findTrainDelay()
-                .filter { it.hour == hour && it.minute == minute && !it.userId.isNullOrEmpty() }
-                .map { it.userId!! }
-                .toSet()
-        if (userIds.isNotEmpty()) {
-            pushMessageService.multicast(userIds, listOf(TextMessage(sb.toString())))
-        }
+
+        noticeService.findTrainDelay()
+                .filter { it.hour == hour && it.minute == minute }
+                .mapNotNull { it.userId }
+                .takeIf { it.isNotEmpty() }
+                ?.let { pushMessageService.multicast(it.toSet(), listOf(TextMessage(message))) }
     }
 }

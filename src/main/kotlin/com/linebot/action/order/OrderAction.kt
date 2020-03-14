@@ -14,15 +14,13 @@ class OrderAction(
 ) : Action() {
 
     override fun execute(userId: String, message: String): List<Message> {
-        Request(
+        requestService.insert(Request(
                 userId = userId,
                 request = message,
                 status = 0,
                 deleted = "0",
                 createdAt = Utils.now()
-        ).apply {
-            requestService.insert(this)
-        }
+        ))
         return listOf(TextMessage("ご意見ありがとうございます！"))
     }
 }

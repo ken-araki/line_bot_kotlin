@@ -27,11 +27,11 @@ class NoticeGarbageOutService(
 
     fun executeDayBefore() {
         if (isTommorowFirstOrThirdFriday()) {
-            val userIds = botUserService.findActiveUser()
+            botUserService.findActiveUser()
                     .filter { !it.userId.isNullOrEmpty() }
-                    .map { it.userId!! }
-                    .toSet()
-            pushMessageService.multicast(userIds, listOf(TextMessage("明日は資源ごみの日です。")))
+                    .mapNotNull { it.userId }
+                    .takeIf { it.isNotEmpty() }
+                    ?.let { pushMessageService.multicast(it.toSet(), listOf(TextMessage("明日は資源ごみの日です。"))) }
         }
     }
 
