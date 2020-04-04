@@ -65,6 +65,7 @@ task ktlint(type: JavaExec, group: "verification") {
 	classpath = configurations.ktlint
 	// not exec test modules
 	args "src/main/**/*.kt"
+	args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlint.xml"
 	// to generate report in checkstyle format prepend following args:
 	// "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
 	// see https://github.com/pinterest/ktlint#usage for more
