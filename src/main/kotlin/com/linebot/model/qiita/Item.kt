@@ -1,7 +1,7 @@
 package com.linebot.model.qiita
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.Date
+import java.util.*
 
 data class Item(
     // https://qiita.com/api/v2/docs#get-apiv2usersuser_iditems
