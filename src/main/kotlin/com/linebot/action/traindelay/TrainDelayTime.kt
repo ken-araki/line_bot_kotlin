@@ -1,9 +1,9 @@
 package com.linebot.action.traindelay
 
 enum class TrainDelayTime(
-        val time: String,
-        val hour: Int,
-        val minute: Int
+    val time: String,
+    val hour: Int,
+    val minute: Int
 ) {
     EXEC_07_00("7:00", 7, 0),
     EXEC_07_20("7:20", 7, 20),

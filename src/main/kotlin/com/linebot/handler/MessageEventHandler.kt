@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @LineMessageHandler
 class MessageEventHandler(
-        private val handler: ActionHandler
+    private val handler: ActionHandler
 ) {
     val log: Logger = LoggerFactory.getLogger(WebClient::class.java)
 

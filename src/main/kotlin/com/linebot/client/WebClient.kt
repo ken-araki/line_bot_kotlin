@@ -1,6 +1,7 @@
 package com.linebot.client
 
 import com.linebot.util.Utils
+import java.net.URI
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -8,11 +9,10 @@ import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestTemplate
-import java.net.URI
 
 @Component
 class WebClient(
-        private val restTemplate: RestTemplate
+    private val restTemplate: RestTemplate
 ) {
 
     val log: Logger = LoggerFactory.getLogger(WebClient::class.java)
@@ -50,7 +50,6 @@ class WebClient(
             log.error("HttpServerErrorException: {}", e)
             throw RuntimeException(e)
         }
-
     }
 
     /*

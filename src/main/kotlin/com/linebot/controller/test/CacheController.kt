@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/test/cache"])
 @Profile("local")
 class CacheController(
-        private val service: UserStatusCacheService
+    private val service: UserStatusCacheService
 ) {
     val log: Logger = LoggerFactory.getLogger(CacheController::class.java)
 
     @GetMapping(path = ["/set"])
     operator fun set(
-            @RequestParam(name = "userId", required = false, defaultValue = "1") userId: String,
-            @RequestParam(name = "nextAction", required = false, defaultValue = "nextAction") nextAction: String
+        @RequestParam(name = "userId", required = false, defaultValue = "1") userId: String,
+        @RequestParam(name = "nextAction", required = false, defaultValue = "nextAction") nextAction: String
     ): String {
         val userStatus = UserStatus(userId, nextAction)
         service.set(userId, userStatus)
@@ -30,10 +30,8 @@ class CacheController(
 
     @GetMapping(path = ["/get"])
     operator fun get(
-            @RequestParam(name = "id", required = false, defaultValue = "1") userId: String
+        @RequestParam(name = "id", required = false, defaultValue = "1") userId: String
     ): UserStatus? {
         return service.get(userId)
     }
-
-
 }

@@ -1,12 +1,10 @@
 package com.linebot.message
 
-import com.google.common.collect.Lists
 import com.linebot.action.ActionSelector
 import com.linecorp.bot.model.action.MessageAction
 import com.linecorp.bot.model.message.FlexMessage
 import com.linecorp.bot.model.message.flex.component.Box
 import com.linecorp.bot.model.message.flex.component.Button
-import com.linecorp.bot.model.message.flex.component.FlexComponent
 import com.linecorp.bot.model.message.flex.container.Bubble
 import com.linecorp.bot.model.message.flex.container.Carousel
 import com.linecorp.bot.model.message.flex.unit.FlexLayout
@@ -58,4 +56,3 @@ class FlexMessageBuilder {
                 .build()
     }
 }
-

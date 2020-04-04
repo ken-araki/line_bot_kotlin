@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class QiitaService(
-        private val qiitaClient: QiitaClient
+    private val qiitaClient: QiitaClient
 ) {
 
     fun getItemByUserId(userId: String, p: RequestParameter): List<ItemSummary> {

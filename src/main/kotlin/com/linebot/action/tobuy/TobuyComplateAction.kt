@@ -4,13 +4,13 @@ import com.linebot.action.Action
 import com.linebot.service.tobuy.TobuyService
 import com.linecorp.bot.model.message.Message
 import com.linecorp.bot.model.message.TextMessage
+import javax.validation.constraints.NotNull
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import javax.validation.constraints.NotNull
 
 @Component
 class TobuyComplateAction(
-        private val tobuyService: TobuyService
+    private val tobuyService: TobuyService
 ) : Action() {
 
     override var nextAction: String? = "tobuyComplateAction"

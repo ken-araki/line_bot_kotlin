@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class TrainDelayClient(
-        private val webClient: WebClient
+    private val webClient: WebClient
 ) {
 
     val log: Logger = LoggerFactory.getLogger(TrainDelayClient::class.java)
@@ -24,4 +24,3 @@ class TrainDelayClient(
     val delay: List<TrainDelay> = listOf(*webClient[UriBuilder.TRAIN_DELAY.build(), Array<TrainDelay>::class.java]
             ?: emptyArray())
 }
-

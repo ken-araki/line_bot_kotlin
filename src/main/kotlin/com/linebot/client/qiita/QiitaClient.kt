@@ -9,10 +9,9 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
-
 @Component
 class QiitaClient(
-        private val webClient: WebClient
+    private val webClient: WebClient
 ) {
     val log: Logger = LoggerFactory.getLogger(QiitaClient::class.java)
 

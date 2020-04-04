@@ -1,13 +1,13 @@
 package com.linebot.service
 
 import com.linebot.model.UserStatus
+import java.util.concurrent.TimeUnit
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
-import java.util.concurrent.TimeUnit
 
 @Service
 class UserStatusCacheService(
-        private val redisTemplate: RedisTemplate<String, UserStatus>
+    private val redisTemplate: RedisTemplate<String, UserStatus>
 ) {
 
     operator fun set(userId: String, userStatus: UserStatus) {

@@ -4,7 +4,7 @@ import com.linebot.model.common.RequestParameter
 import org.springframework.web.util.UriComponentsBuilder
 
 enum class UriBuilder(
-        val path: String
+    val path: String
 ) {
     QIITA_USER_ITEMS("https://qiita.com/api/v2/users/{userId}/items"),
     QIITA_ITEM_STOCK("https://qiita.com/api/v2/items/{itemId}/stockers"),

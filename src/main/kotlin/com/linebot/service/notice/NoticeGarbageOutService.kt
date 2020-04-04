@@ -3,15 +3,15 @@ package com.linebot.service.notice
 import com.linebot.service.message.PushMessageService
 import com.linebot.service.user.BotUserService
 import com.linecorp.bot.model.message.TextMessage
-import org.springframework.stereotype.Service
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.ZoneId
+import org.springframework.stereotype.Service
 
 @Service
 class NoticeGarbageOutService(
-        private val pushMessageService: PushMessageService,
-        private val botUserService: BotUserService
+    private val pushMessageService: PushMessageService,
+    private val botUserService: BotUserService
 ) {
 
     /**
@@ -44,5 +44,4 @@ class NoticeGarbageOutService(
         val day = target.dayOfMonth
         return fn(day, dayOfWeek)
     }
-
 }

@@ -4,20 +4,19 @@ import com.linebot.entity.TrainDelayLog
 import com.linebot.model.train.TrainDelay
 import com.linebot.repository.TrainDelayLogRepository
 import com.linebot.util.Utils
+import java.time.LocalDateTime
+import java.time.ZoneId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-import java.time.LocalDateTime
-import java.time.ZoneId
-
 @Service
 class LogService(
-        private val trainDelayLogRepository: TrainDelayLogRepository
+    private val trainDelayLogRepository: TrainDelayLogRepository
 ) {
 
     @Transactional
     fun insertTrainDelay(
-            trains: List<TrainDelay>
+        trains: List<TrainDelay>
     ): List<TrainDelayLog> {
         val now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"))
         val yearMonth = "${now.year}${now.monthValue}"
@@ -34,5 +33,4 @@ class LogService(
         }
         return trainDelayLogRepository.saveAll(logs)
     }
-
 }

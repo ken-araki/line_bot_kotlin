@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class TobuyAddAction(
-        private val tobuyService: TobuyService
+    private val tobuyService: TobuyService
 ) : Action() {
 
     override var nextAction: String? = "tobuyAddAction"

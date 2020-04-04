@@ -14,7 +14,6 @@ import com.linecorp.bot.model.message.flex.unit.FlexFontSize
 import com.linecorp.bot.model.message.flex.unit.FlexLayout
 import com.linecorp.bot.model.message.flex.unit.FlexMarginSize
 import org.springframework.stereotype.Component
-import javax.validation.constraints.NotNull
 
 @Component
 class QiitaItemMessage {
@@ -63,7 +62,7 @@ class QiitaItemMessage {
     private fun buildItem(qiitaId: String, item: ItemSummary): Box {
         val action = URIAction(
                 "item link",
-                "https://qiita.com/${qiitaId}/items/${item.id}",
+                "https://qiita.com/$qiitaId/items/${item.id}",
                 null
         )
         return Box.builder()
@@ -130,4 +129,3 @@ class QiitaItemMessage {
                 .build()
     }
 }
-

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/test/train"])
 @Profile("local")
 class TrainDelayController(
-        private val client: TrainDelayClient
+    private val client: TrainDelayClient
 ) {
 
     @GetMapping("/delay")

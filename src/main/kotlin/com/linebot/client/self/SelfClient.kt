@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class SelfClient(
-        private val webClient: WebClient,
-        private val config: PropertiesConfig
+    private val webClient: WebClient,
+    private val config: PropertiesConfig
 ) {
     val log: Logger = LoggerFactory.getLogger(SelfClient::class.java)
 

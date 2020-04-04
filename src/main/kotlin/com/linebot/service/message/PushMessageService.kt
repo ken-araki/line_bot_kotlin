@@ -1,6 +1,5 @@
 package com.linebot.service.message
 
-import com.linebot.client.self.SelfClient
 import com.linebot.util.Utils
 import com.linecorp.bot.client.LineMessagingClient
 import com.linecorp.bot.model.Broadcast
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PushMessageService(
-        private val lineMessagingClient: LineMessagingClient
+    private val lineMessagingClient: LineMessagingClient
 ) {
 
     val log: Logger = LoggerFactory.getLogger(PushMessageService::class.java)

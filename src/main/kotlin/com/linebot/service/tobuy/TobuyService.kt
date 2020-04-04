@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class TobuyService(
-        private val tobuyRepository: TobuyRepository
+    private val tobuyRepository: TobuyRepository
 ) {
 
     @Transactional(readOnly = true)

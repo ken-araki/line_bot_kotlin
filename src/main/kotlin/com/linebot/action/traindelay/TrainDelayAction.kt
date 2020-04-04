@@ -4,12 +4,12 @@ import com.linebot.action.Action
 import com.linebot.service.notice.NoticeService
 import com.linecorp.bot.model.message.Message
 import com.linecorp.bot.model.message.TextMessage
-import org.springframework.stereotype.Component
 import javax.validation.constraints.NotNull
+import org.springframework.stereotype.Component
 
 @Component
 class TrainDelayAction(
-        private val noticeService: NoticeService
+    private val noticeService: NoticeService
 ) : Action() {
 
     override fun execute(@NotNull userId: String, @NotNull message: String): List<Message> {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/test/action"])
 @Profile("local")
 class TobuyActionController(
-        private val action: ActionHandler
+    private val action: ActionHandler
 ) {
     val log: Logger = LoggerFactory.getLogger(TobuyActionController::class.java)
 
@@ -26,15 +26,15 @@ class TobuyActionController(
 
     @GetMapping(path = ["/tobuy/add"])
     fun add(
-            @RequestParam(name = "goods", required = false, defaultValue = "test") goods: String
+        @RequestParam(name = "goods", required = false, defaultValue = "test") goods: String
     ): List<Message> {
         return action.handle("1", goods)
     }
 
     @GetMapping(path = ["/tobuy/add2"])
     fun add2(
-            @RequestParam(name = "goods1", required = false, defaultValue = "test1") goods1: String,
-            @RequestParam(name = "goods2", required = false, defaultValue = "test2") goods2: String
+        @RequestParam(name = "goods1", required = false, defaultValue = "test1") goods1: String,
+        @RequestParam(name = "goods2", required = false, defaultValue = "test2") goods2: String
     ): List<Message> {
         val message = goods1 + Utils.LINE_SEPARATOR + goods2
         return action.handle("1", message)
@@ -52,8 +52,8 @@ class TobuyActionController(
 
     @GetMapping(path = ["/tobuy/complate2"])
     fun complate2(
-            @RequestParam(name = "id") id: String,
-            @RequestParam(name = "goods") goods: String
+        @RequestParam(name = "id") id: String,
+        @RequestParam(name = "goods") goods: String
     ): List<Message> {
         return action.handle("1", "$id $goods")
     }

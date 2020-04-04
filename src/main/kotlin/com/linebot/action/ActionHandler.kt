@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class ActionHandler(
-        private val applicationContext: ApplicationContext,
-        private val userStatusCacheService: UserStatusCacheService,
-        private val botUserService: BotUserService,
-        private val noticeService: NoticeService,
-        private val flexMessageBuilder: FlexMessageBuilder
+    private val applicationContext: ApplicationContext,
+    private val userStatusCacheService: UserStatusCacheService,
+    private val botUserService: BotUserService,
+    private val noticeService: NoticeService,
+    private val flexMessageBuilder: FlexMessageBuilder
 ) {
 
     fun follow(userId: String): List<Message> {

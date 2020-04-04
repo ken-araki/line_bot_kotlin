@@ -1,8 +1,8 @@
 package com.linebot.action
 
 enum class ActionSelector(
-        val startWord: String,
-        val actionList: List<String>
+    val startWord: String,
+    val actionList: List<String>
 
 ) {
     TRAIN_DELAY("電車遅延設定", listOf("trainDelayInputAction", "TrainDelayAction")),
@@ -13,5 +13,4 @@ enum class ActionSelector(
     companion object {
         fun getByStartWord(message: String): ActionSelector? = values().firstOrNull { it.startWord == message }
     }
-
 }

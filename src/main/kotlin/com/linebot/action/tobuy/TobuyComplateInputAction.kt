@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class TobuyComplateInputAction(
-        private val tobuyService: TobuyService,
-        private val flexMessageBuilder: FlexMessageBuilder
+    private val tobuyService: TobuyService,
+    private val flexMessageBuilder: FlexMessageBuilder
 ) : Action() {
 
     override var nextAction: String? = "tobuyComplateAction"

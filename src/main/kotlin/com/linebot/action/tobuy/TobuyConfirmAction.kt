@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class TobuyConfirmAction(
-        private val tobuyService: TobuyService
+    private val tobuyService: TobuyService
 ) : Action() {
 
     override fun execute(userId: String, message: String): List<Message> {

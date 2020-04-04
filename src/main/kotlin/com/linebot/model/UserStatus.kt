@@ -1,10 +1,10 @@
 package com.linebot.model
 
-import org.springframework.stereotype.Component
 import java.io.Serializable
+import org.springframework.stereotype.Component
 
 @Component
 class UserStatus(
-        var userId: String? = null,
-        var nextAction: String? = null
+    var userId: String? = null,
+    var nextAction: String? = null
 ) : Serializable

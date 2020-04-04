@@ -7,8 +7,8 @@ import org.springframework.util.MultiValueMap
 
 @Component
 data class QiitaRequestParameter(
-        var page: Int?,
-        var perPage: Int?
+    var page: Int?,
+    var perPage: Int?
 ) : RequestParameter {
     override fun convert(): MultiValueMap<String, String> {
         val params = LinkedMultiValueMap<String, String>()

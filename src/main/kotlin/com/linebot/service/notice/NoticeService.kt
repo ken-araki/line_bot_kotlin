@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class NoticeService(
-        private val noticeRepository: NoticeRepository
+    private val noticeRepository: NoticeRepository
 ) {
 
     @Transactional

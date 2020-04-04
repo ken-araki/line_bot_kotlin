@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller
 @Controller
 @Profile("local", "production")
 class KeepAliveBatch(
-        private val selfClient: SelfClient
+    private val selfClient: SelfClient
 ) {
 
     // LINE bot は30秒以内にレスポンスしないと、そっとなかったことにされてしまう（何も帰らずエラーになる）ので

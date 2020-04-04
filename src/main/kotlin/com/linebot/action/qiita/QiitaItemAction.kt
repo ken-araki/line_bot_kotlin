@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class QiitaItemAction(
-        private val qiitaService: QiitaService,
-        private val qiitaItemMessage: QiitaItemMessage
+    private val qiitaService: QiitaService,
+    private val qiitaItemMessage: QiitaItemMessage
 ) : Action() {
 
     override fun execute(userId: String, message: String): List<Message> {

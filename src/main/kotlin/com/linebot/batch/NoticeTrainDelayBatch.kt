@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller
 
 @Controller
 class NoticeTrainDelayBatch(
-        private val getTrainDelayResourceService: GetTrainDelayResourceService
+    private val getTrainDelayResourceService: GetTrainDelayResourceService
 ) {
 
     @Scheduled(cron = "0 */20 7-9 * * *", zone = "Asia/Tokyo")

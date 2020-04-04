@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/test/qiita"])
 @Profile("local")
 class QiitaController(
-        private val client: QiitaClient,
-        private val qiitaService: QiitaService
+    private val client: QiitaClient,
+    private val qiitaService: QiitaService
 ) {
     val log: Logger = LoggerFactory.getLogger(QiitaController::class.java)
 
