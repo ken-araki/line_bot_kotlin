@@ -25,15 +25,19 @@ class GetTrainDelayResourceService(
         val results = trainDelayClient.delay
                 .also { logService.insertTrainDelay(it) }
         val message = results.takeIf { it.isNotEmpty() }
-                ?.filter { it.name.isNullOrEmpty() }
-                ?.joinToString { Utils.LINE_SEPARATOR + it.name }
+                ?.filterNot { it.name.isNullOrEmpty() }
+                ?.map { it.name }
+                ?.joinToString(Utils.LINE_SEPARATOR)
                 ?: "遅延している沿線はありません。"
 
 
-        noticeService.findTrainDelay()
+        val userIds = noticeService.findTrainDelay()
                 .filter { it.hour == hour && it.minute == minute }
                 .mapNotNull { it.userId }
-                .takeIf { it.isNotEmpty() }
-                ?.let { pushMessageService.multicast(it.toSet(), listOf(TextMessage(message))) }
+                .toSet()
+
+        if (userIds.isNotEmpty()) {
+            pushMessageService.multicast(userIds, listOf(TextMessage(message)))
+        }
     }
 }
