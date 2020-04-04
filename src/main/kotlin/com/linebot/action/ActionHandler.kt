@@ -3,9 +3,7 @@ package com.linebot.action
 import com.linebot.message.FlexMessageBuilder
 import com.linebot.model.UserStatus
 import com.linebot.service.UserStatusCacheService
-import com.linebot.service.log.LogService
 import com.linebot.service.notice.NoticeService
-import com.linebot.service.user.BotUserQiitaService
 import com.linebot.service.user.BotUserService
 import com.linecorp.bot.model.message.Message
 import com.linecorp.bot.model.message.TextMessage
@@ -18,10 +16,8 @@ class ActionHandler(
         private val applicationContext: ApplicationContext,
         private val userStatusCacheService: UserStatusCacheService,
         private val botUserService: BotUserService,
-        private val botUserQiitaService: BotUserQiitaService,
         private val noticeService: NoticeService,
-        private val flexMessageBuilder: FlexMessageBuilder,
-        private val logService: LogService
+        private val flexMessageBuilder: FlexMessageBuilder
 ) {
 
     fun follow(userId: String): List<Message> {
@@ -35,7 +31,6 @@ class ActionHandler(
     @Transactional
     fun unfollow(userId: String) {
         botUserService.delete(userId)
-        botUserQiitaService.delete(userId)
         noticeService.deleteNotice(userId)
     }
 
@@ -49,21 +44,16 @@ class ActionHandler(
                 ?.let { getAction(it) }
                 ?.takeIf { it.check(message) }
                 ?.let {
-                    execute(it, userId, message).also { _ ->
+                    it.execute(userId, message).also { _ ->
                         userStatusCacheService.set(userId, UserStatus(userId, it.nextAction))
                     }
                 } ?: return handleError(userId)
     }
 
-    private fun execute(action: Action, userId: String, message: String): List<Message> {
-        logService.insertBotLog(userId, action.javaClass.simpleName, message)
-        return action.execute(userId, message)
-    }
-
     private fun executeStartAction(actionSelector: ActionSelector, userId: String, message: String): List<Message> {
         val action = getStartAction(actionSelector)
         // スタートワードなのでチェック不要でexecute実行する
-        val result = execute(action, userId, message)
+        val result = action.execute(userId, message)
         userStatusCacheService.set(userId, UserStatus(userId, action.nextAction))
         return result
     }

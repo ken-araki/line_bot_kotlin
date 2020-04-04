@@ -1,9 +1,7 @@
 package com.linebot.service.log
 
-import com.linebot.entity.BotLog
 import com.linebot.entity.TrainDelayLog
 import com.linebot.model.train.TrainDelay
-import com.linebot.repository.BotLogRepository
 import com.linebot.repository.TrainDelayLogRepository
 import com.linebot.util.Utils
 import org.springframework.stereotype.Service
@@ -14,31 +12,8 @@ import java.time.ZoneId
 
 @Service
 class LogService(
-        private val botLogRepository: BotLogRepository,
         private val trainDelayLogRepository: TrainDelayLogRepository
 ) {
-
-    @Transactional
-    fun insertBotLog(
-            userId: String,
-            botName: String,
-            message: String
-    ): BotLog {
-        val now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"))
-        return botLogRepository.save(
-                BotLog(
-                        userId = userId,
-                        botActionName = botName,
-                        message = message,
-                        yearMonth = "${now.year}${now.monthValue}",
-                        day = now.dayOfMonth,
-                        dayOfWeek = now.dayOfWeek.value,
-                        hour = now.hour,
-                        minute = now.minute,
-                        execTime = Utils.now()
-                )
-        )
-    }
 
     @Transactional
     fun insertTrainDelay(
