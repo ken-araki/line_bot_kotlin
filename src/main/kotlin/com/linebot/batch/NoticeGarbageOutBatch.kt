@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Controller
 
 @Controller
-@Profile("release", "local", "develop")
+@Profile("production", "local")
 class NoticeGarbageOutBatch(
     private val noticeGarbageOutService: NoticeGarbageOutService
 ) {
