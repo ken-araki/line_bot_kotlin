@@ -12,21 +12,17 @@ import org.springframework.transaction.annotation.Transactional
 class TobuyAddAction(
     private val tobuyService: TobuyService
 ) : Action() {
-
     override var nextAction: String? = "tobuyAddAction"
-
     @Transactional
     override fun execute(userId: String, message: String): List<Message> {
         val resultInsert = message.split(Utils.LINE_SEPARATOR.toRegex())
-                .filter { it.isNotEmpty() }
-                .map { tobuyService.insertByGoods(userId, it) }
-                .sum()
-
-        val messageInsert = "${resultInsert}件の買い物リストを登録しました."
-        val messageAdd = "他にあればそのまま記載してください"
-        return listOf(
-                TextMessage(messageInsert),
-                TextMessage(messageAdd)
-        )
+            .filter { it.isNotEmpty() }
+            .map { tobuyService.insertByGoods(userId, it) }
+            .sum()
+        val messageInsert = """
+            ${resultInsert}件の買い物リストを登録しました.
+            他にあればそのまま記載してください
+        """.trimIndent()
+        return listOf(TextMessage(messageInsert))
     }
 }

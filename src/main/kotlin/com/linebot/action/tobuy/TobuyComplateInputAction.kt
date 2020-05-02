@@ -13,18 +13,15 @@ class TobuyComplateInputAction(
     private val tobuyService: TobuyService,
     private val flexMessageBuilder: FlexMessageBuilder
 ) : Action() {
-
     override var nextAction: String? = "tobuyComplateAction"
-
     override fun execute(userId: String, message: String): List<Message> {
         val tobuyList = tobuyService.findByIsCompleted(userId, "0")
-                .takeIf { it.isNotEmpty() }
-                ?.map { MessageAction(it.goods, "${it.id} ${it.goods}") }
-                ?: return listOf(TextMessage("買い物リストはありません"))
+            .takeIf { it.isNotEmpty() }
+            ?.map { MessageAction(it.goods, "${it.id} ${it.goods}") }
+            ?: return listOf(TextMessage("買い物リストはありません"))
 
-        return listOf(TextMessage(
-                "購入した商品を選択してください"),
-                flexMessageBuilder.buildListMessageAction("購入した商品を選択してください", tobuyList)
+        return listOf(
+            flexMessageBuilder.buildListMessageAction("購入した商品を選択してください", tobuyList)
         )
     }
 }
