@@ -6,15 +6,15 @@ import com.linecorp.bot.model.message.Message
 import com.linecorp.bot.model.message.TextMessage
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import javax.validation.constraints.NotNull
 
 @Component
 class TobuyComplateAction(
     private val tobuyService: TobuyService
 ) : Action() {
     override var nextAction: String? = "tobuyComplateAction"
+
     @Transactional
-    override fun execute(@NotNull userId: String, @NotNull message: String): List<Message> {
+    override fun execute(userId: String, message: String): List<Message> {
         val (id, goods) = message.split(" ".toRegex(), 2)
             .let { it[0].toInt() to it[1] }
         val noItemMessage = """
