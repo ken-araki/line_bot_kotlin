@@ -8,5 +8,7 @@ import org.springframework.stereotype.Component
 data class PropertiesConfig(
     var id: String? = null,
     var ownHost: String? = null,
-    var ownPort: String? = null
+    var ownPort: String? = null,
+    var ownUserMid: String? = null,
+    var token: String? = null
 )

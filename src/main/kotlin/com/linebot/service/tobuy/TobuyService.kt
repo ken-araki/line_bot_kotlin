@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional
 class TobuyService(
     private val tobuyRepository: TobuyRepository
 ) {
-
     @Transactional(readOnly = true)
     fun findByIsCompleted(userId: String, isCompleted: String): List<Tobuy> {
         return tobuyRepository.findByUserIdAndIsCompleted(userId, isCompleted)
@@ -23,13 +22,15 @@ class TobuyService(
 
     @Transactional
     fun insertByGoods(userId: String, goods: String): Int {
-        tobuyRepository.save(Tobuy(
+        tobuyRepository.save(
+            Tobuy(
                 goods = goods,
                 isCompleted = "0",
                 createdDate = Utils.now(),
                 updatedDate = Utils.now(),
                 userId = userId
-        ))
+            )
+        )
         return 1
     }
 
@@ -48,5 +49,16 @@ class TobuyService(
             it.updatedDate = Utils.now()
             tobuyRepository.save(it)
         }.count()
+    }
+
+    @Transactional
+    fun updateCompletedById(ids: List<Int>) {
+        ids.forEach { id ->
+            tobuyRepository.findById(id.toLong()).ifPresent {
+                it.isCompleted = "1"
+                it.updatedDate = Utils.now()
+                tobuyRepository.save(it)
+            }
+        }
     }
 }
