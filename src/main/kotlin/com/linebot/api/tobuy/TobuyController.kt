@@ -7,6 +7,7 @@ import com.linebot.config.PropertiesConfig
 import com.linebot.service.tobuy.TobuyService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -22,6 +23,7 @@ class TobuyController(
 ) {
     val log: Logger = LoggerFactory.getLogger(TobuyController::class.java)
     @GetMapping
+    @CrossOrigin
     fun get(
         @RequestHeader("token") token: String,
         @RequestHeader("nonce") nonce: String
@@ -38,6 +40,7 @@ class TobuyController(
     }
 
     @PostMapping(path = ["/add"])
+    @CrossOrigin
     fun add(
         @RequestHeader("token") token: String,
         @RequestHeader("nonce") nonce: String,
@@ -51,6 +54,7 @@ class TobuyController(
     }
 
     @PostMapping(path = ["/buy"])
+    @CrossOrigin
     fun add(
         @RequestHeader("token") token: String,
         @RequestHeader("nonce") nonce: String,
