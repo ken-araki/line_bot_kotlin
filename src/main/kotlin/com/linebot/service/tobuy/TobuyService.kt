@@ -54,7 +54,7 @@ class TobuyService(
     @Transactional
     fun updateCompletedById(ids: List<Int>) {
         ids.forEach { id ->
-            tobuyRepository.findById(id.toLong()).ifPresent {
+            tobuyRepository.findById(id).ifPresent {
                 it.isCompleted = "1"
                 it.updatedDate = Utils.now()
                 tobuyRepository.save(it)
