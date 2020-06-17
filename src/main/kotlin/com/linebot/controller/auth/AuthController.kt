@@ -22,9 +22,9 @@ class AuthController(
         httpSession: HttpSession,
         @RequestParam("code") code: String,
         @RequestParam("state") state: String,
-        @RequestParam("redirectUri") redirectUri: String
+        @RequestParam("liffRedirectUri") liffRedirectUri: String
     ): String {
-        httpSession.setAttribute("jwt", lineService.auth(code, redirectUri))
+        httpSession.setAttribute("jwt", lineService.auth(code, liffRedirectUri))
         return "redirect:${propertiesConfig.redirectUri}"
     }
 }
