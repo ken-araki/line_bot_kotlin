@@ -21,11 +21,10 @@ class AuthController(
     fun auth(
         httpSession: HttpSession,
         @RequestParam("code") code: String,
-        @RequestParam("nonce") nonce: String,
         @RequestParam("state") state: String,
         @RequestParam("redirectUri") redirectUri: String
     ): String {
-        httpSession.setAttribute("jwt", lineService.auth(code, nonce, redirectUri))
+        httpSession.setAttribute("jwt", lineService.auth(code, redirectUri))
         return "redirect:${propertiesConfig.redirectUri}"
     }
 }
