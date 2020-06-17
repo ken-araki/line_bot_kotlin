@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS bot_user
+  ADD COLUMN app_user_id VARCHAR(255) DEFAULT '';

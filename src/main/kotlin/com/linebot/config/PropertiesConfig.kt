@@ -10,5 +10,6 @@ data class PropertiesConfig(
     var ownHost: String? = null,
     var ownPort: String? = null,
     var ownUserMid: String? = null,
-    var token: String? = null
+    var token: String? = null,
+    var redirectUri: String? = null
 )

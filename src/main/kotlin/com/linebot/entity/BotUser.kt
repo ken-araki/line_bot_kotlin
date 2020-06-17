@@ -17,6 +17,8 @@ data class BotUser(
     var id: Int? = null,
     @Column(name = "user_id")
     var userId: String? = null,
+    @Column(name = "app_user_id")
+    var appUserId: String? = null,
     @Column(name = "deleted")
     var deleted: String? = null,
     @Column(name = "created_date")

@@ -2,6 +2,7 @@ package com.linebot.service.user
 
 import com.linebot.entity.BotUser
 import com.linebot.repository.BotUserRepository
+import com.linebot.util.RandomUtils
 import com.linebot.util.Utils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,6 +21,7 @@ class BotUserService(
     fun insert(userId: String): BotUser {
         return botUserRepository.save(BotUser(
                 userId = userId,
+                appUserId = RandomUtils.createUserId(),
                 deleted = "0",
                 createdDate = Utils.now()
         ))
@@ -31,5 +33,10 @@ class BotUserService(
             it.deleted = "1"
             botUserRepository.save(it)
         }
+    }
+
+    @Transactional
+    fun getOrCreate(userId: String): BotUser {
+        return botUserRepository.findByUserId(userId) ?: insert(userId)
     }
 }
