@@ -2,7 +2,7 @@ package com.linebot.client.line
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.linebot.client.line.response.LineAuthResponse
-import com.linebot.config.LineConfig
+import com.linebot.config.LineAuthConfig
 import com.linebot.controller.auth.AuthController
 import com.mashape.unirest.http.Unirest
 import org.slf4j.Logger
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class LineApiClient(
-    private val lineConfig: LineConfig,
+    private val lineAuthConfig: LineAuthConfig,
     private val objectMapper: ObjectMapper
 ) {
     val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
@@ -26,11 +26,11 @@ class LineApiClient(
             .header("Content-Type", "application/x-www-form-urlencoded")
             .field("grant_type", AUTH_GRANT_TYPE)
             .field("code", code)
-            .field("client_id", lineConfig.channelId)
-            .field("client_secret", lineConfig.channelSecret)
+            .field("client_id", lineAuthConfig.channelId)
+            .field("client_secret", lineAuthConfig.channelSecret)
             .field("redirect_uri", redirectUri)
             .asString()
-        log.info("LineApiClient auth response: {}", response)
+        log.info("LineApiClient auth response: {}", response.body)
         return objectMapper.readValue(response.body, LineAuthResponse::class.java)
     }
 }

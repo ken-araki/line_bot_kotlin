@@ -3,7 +3,7 @@ package com.linebot.service.line
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.linebot.client.line.LineApiClient
-import com.linebot.config.LineConfig
+import com.linebot.config.LineAuthConfig
 import com.linebot.entity.BotUser
 import com.linebot.service.user.BotUserService
 import java.util.Date
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 class LineService(
     private val lineApiClient: LineApiClient,
     private val botUserService: BotUserService,
-    private val lineConfig: LineConfig
+    private val lineAuthConfig: LineAuthConfig
 ) {
     val log: Logger = LoggerFactory.getLogger(LineService::class.java)
     fun auth(code: String, redirectUri: String): String {
@@ -33,7 +33,7 @@ class LineService(
     }
 
     fun encodeJwt(user: BotUser, accessToken: String, expierd: Long): String {
-        val algorithm = Algorithm.HMAC256(lineConfig.channelSecret)
+        val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
         return JWT.create()
             .withIssuer("auth0")
             .withClaim("appUserId", user.appUserId)
