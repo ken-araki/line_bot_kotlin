@@ -22,14 +22,15 @@ class LineApiClient(
     }
 
     fun auth(code: String, redirectUri: String): LineAuthResponse {
-        val response = Unirest.post(URL)
+        val request = Unirest.post(URL)
             .header("Content-Type", "application/x-www-form-urlencoded")
             .field("grant_type", AUTH_GRANT_TYPE)
             .field("code", code)
             .field("client_id", lineAuthConfig.channelId)
             .field("client_secret", lineAuthConfig.channelSecret)
             .field("redirect_uri", redirectUri)
-            .asString()
+        log.info("request: {}", request)
+        val response = request.asString()
         log.info("LineApiClient auth response: {}", response.body)
         return objectMapper.readValue(response.body, LineAuthResponse::class.java)
     }
