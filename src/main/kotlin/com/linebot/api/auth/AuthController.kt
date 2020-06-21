@@ -4,6 +4,7 @@ import com.linebot.api.response.ValueResponse
 import com.linebot.service.line.LineService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,6 +22,7 @@ class AuthController(
     val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
 
     @PostMapping("/token")
+    @CrossOrigin
     fun auth(
         @RequestHeader(JWT) jwt: String,
         @RequestHeader(ACCESS_TOKEN) accessToken: String,
