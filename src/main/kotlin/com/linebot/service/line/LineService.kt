@@ -6,10 +6,11 @@ import com.linebot.client.line.LineApiClient
 import com.linebot.config.LineAuthConfig
 import com.linebot.entity.BotUser
 import com.linebot.service.user.BotUserService
-import java.util.Date
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.util.Calendar
+import java.util.Date
 
 @Service
 class LineService(
@@ -18,27 +19,23 @@ class LineService(
     private val lineAuthConfig: LineAuthConfig
 ) {
     val log: Logger = LoggerFactory.getLogger(LineService::class.java)
-    fun auth(code: String, redirectUri: String): String {
-        log.info("LineService auth. parameters code:{}, redirectUri:{}", code, redirectUri)
-        val response = lineApiClient.auth(code, redirectUri)
-        log.info("LineService auth. lineApiClient.auth response: {}", response)
-        val exp = response.expiresIn
-        val accessToken = response.accessToken
-        val decodedIdToken = JWT.decode(response.idToken)
-        log.info("LineService auth. decodedIdToken: {}, exp: {}, accessToken:{}", decodedIdToken, exp, accessToken)
+    fun auth(jwt: String, accessToken: String): String {
+        log.info("LineService auth. jwt: {}, accessToken: {}", jwt, accessToken)
+        val decodedIdToken = JWT.decode(jwt)
+        log.info("LineService auth. decodedIdToken: {}", decodedIdToken)
         val mid = decodedIdToken.getClaim("sub").asString()
         val user = botUserService.getOrCreate(mid)
-        return encodeJwt(user, accessToken, exp)
+        return encodeJwt(user, accessToken)
             .also { log.info("token is {}", this) }
     }
 
-    fun encodeJwt(user: BotUser, accessToken: String, expierd: Long): String {
+    fun encodeJwt(user: BotUser, accessToken: String): String {
         val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
         return JWT.create()
             .withIssuer("auth0")
             .withClaim("appUserId", user.appUserId)
             .withClaim("accessToken", accessToken)
-            .withExpiresAt(Date(expierd - (60 * 1000)))
+            .withExpiresAt(getExpireAt())
             .sign(algorithm)
     }
     // 現状使わないためコメントアウトする
@@ -50,4 +47,11 @@ class LineService(
     //     val jwt = verifier.verify(token)
     //     return jwt.getClaim("appUserId").asString()
     // }
+    fun getExpireAt(): Date {
+        val calendar = Calendar.getInstance().apply {
+            this.time = Date()
+            this.add(Calendar.HOUR, 1)
+        }
+        return calendar.time
+    }
 }

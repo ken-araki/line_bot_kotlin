@@ -1,9 +1,9 @@
 package com.linebot.client.line
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.linebot.api.auth.AuthController
 import com.linebot.client.line.response.LineAuthResponse
 import com.linebot.config.LineAuthConfig
-import com.linebot.controller.auth.AuthController
 import com.mashape.unirest.http.Unirest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
