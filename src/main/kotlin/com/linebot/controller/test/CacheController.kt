@@ -1,7 +1,7 @@
 package com.linebot.controller.test
 
 import com.linebot.model.UserStatus
-import com.linebot.service.UserStatusCacheService
+import com.linebot.service.cache.UserStatusCacheService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile

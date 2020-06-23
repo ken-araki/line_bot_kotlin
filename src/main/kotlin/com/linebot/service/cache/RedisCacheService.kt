@@ -2,12 +2,9 @@ package com.linebot.service.cache
 
 import java.util.concurrent.TimeUnit
 import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.stereotype.Service
 
-@Service
-class RedisCacheService<T>(
-    private val redisTemplate: RedisTemplate<String, T>
-) {
+interface RedisCacheService<T> {
+    val redisTemplate: RedisTemplate<String, T>
 
     fun set(key: String, value: T, expire: Long = 1, time: TimeUnit = TimeUnit.HOURS) {
         redisTemplate.opsForValue().set(key, value)
