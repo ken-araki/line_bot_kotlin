@@ -2,7 +2,7 @@ package com.linebot.client.line
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.linebot.api.auth.AuthController
-import com.linebot.client.line.response.LineAuthResponse
+import com.linebot.client.line.response.LineVerityResponse
 import com.linebot.config.LineAuthConfig
 import com.mashape.unirest.http.Unirest
 import org.slf4j.Logger
@@ -14,24 +14,22 @@ class LineApiClient(
     private val lineAuthConfig: LineAuthConfig,
     private val objectMapper: ObjectMapper
 ) {
-    val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
-
     companion object {
-        val URL = "https://api.line.me/oauth2/v2.1/token"
-        val AUTH_GRANT_TYPE = "authorization_code"
+        const val VERITY_URL = "https://api.line.me/oauth2/v2.1/verify"
     }
 
-    fun auth(code: String, redirectUri: String): LineAuthResponse {
-        val request = Unirest.post(URL)
+    val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
+
+    // https://developers.line.biz/ja/reference/social-api/#verify-id-token
+    fun verify(idToken: String, nonce: String): LineVerityResponse {
+        val request = Unirest.post(VERITY_URL)
             .header("Content-Type", "application/x-www-form-urlencoded")
-            .field("grant_type", AUTH_GRANT_TYPE)
-            .field("code", code)
+            .field("id_token", idToken)
+            .field("nonce", nonce)
             .field("client_id", lineAuthConfig.channelId)
-            .field("client_secret", lineAuthConfig.channelSecret)
-            .field("redirect_uri", redirectUri)
         log.info("request: {}", request)
         val response = request.asString()
-        log.info("LineApiClient auth response: {}", response.body)
-        return objectMapper.readValue(response.body, LineAuthResponse::class.java)
+        log.info("LineApiClient auth response: {}, body: {}", response, response.body)
+        return objectMapper.readValue(response.body, LineVerityResponse::class.java)
     }
 }
