@@ -21,11 +21,10 @@ class LineApiClient(
     val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
 
     // https://developers.line.biz/ja/reference/social-api/#verify-id-token
-    fun verify(idToken: String, nonce: String): LineVerityResponse {
+    fun verify(idToken: String): LineVerityResponse {
         val request = Unirest.post(VERITY_URL)
             .header("Content-Type", "application/x-www-form-urlencoded")
             .field("id_token", idToken)
-            .field("nonce", nonce)
             .field("client_id", lineAuthConfig.channelId)
         log.info("request: {}", request)
         val response = request.asString()

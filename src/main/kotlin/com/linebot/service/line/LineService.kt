@@ -23,29 +23,34 @@ class LineService(
     private val lineAuthConfig: LineAuthConfig
 ) {
     val log: Logger = LoggerFactory.getLogger(LineService::class.java)
-
     fun nonce(): Map<String, String> {
+        val key = RandomUtils.UUIDString()
         val nonce = RandomUtils.UUIDString()
-        val nonceId = RandomUtils.UUIDString()
-        nonceCacheService.set(nonceId, nonce)
+        nonceCacheService.set(key, nonce)
         return mapOf(
             "nonce" to nonce,
-            "nonceId" to nonceId
+            "token" to encodeNonceJwt(key, nonce)
         )
     }
 
-    fun auth(idToken: String, accessToken: String, nonceId: String): String {
-        log.info("LineService auth. idToken: {}, accessToken: {}, nonceId: {}", idToken, accessToken, nonceId)
-        val nonce = nonceCacheService.get(nonceId) ?: throw AuthException("nonce idが不正です")
-        val decodedIdToken = lineApiClient.verify(idToken, nonce)
-        log.info("LineService auth. decodedIdToken: {}", decodedIdToken)
-        nonceCacheService.delete(nonceId)
-        val user = botUserService.getOrCreate(decodedIdToken.sub)
-        return encodeJwt(user, accessToken)
-            .also { log.info("token is {}", it) }
+    fun auth(idToken: String, accessToken: String, onetimeJwt: String, nonce: String): String {
+        log.info(
+            "LineService auth. idToken: {}, accessToken: {}, onetimeJwt: {}, nonce: {}",
+            idToken,
+            accessToken,
+            onetimeJwt,
+            nonce
+        )
+        if (verityNonce(onetimeJwt, nonce)) {
+            val decodedIdToken = lineApiClient.verify(idToken)
+            log.info("LineService auth. decodedIdToken: {}", decodedIdToken)
+            val user = botUserService.getOrCreate(decodedIdToken.sub)
+            return encodeAuthJwt(user, accessToken)
+                .also { log.info("token is {}", it) }
+        } else throw AuthException("nonceが不正です")
     }
 
-    fun encodeJwt(user: BotUser, accessToken: String): String {
+    fun encodeAuthJwt(user: BotUser, accessToken: String): String {
         val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
         return JWT.create()
             .withIssuer("auth0")
@@ -55,15 +60,29 @@ class LineService(
             .sign(algorithm)
     }
 
-    // 現状使わないためコメントアウトする
-    // fun decodeJwt(token: String): String {
-    //     val algorithm = Algorithm.HMAC256("secret")
-    //     val verifier = JWT.require(algorithm)
-    //         .withIssuer("auth0")
-    //         .build()
-    //     val jwt = verifier.verify(token)
-    //     return jwt.getClaim("appUserId").asString()
-    // }
+    fun encodeNonceJwt(id: String, nonce: String): String {
+        val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
+        return JWT.create()
+            .withIssuer("auth0")
+            .withClaim("id", id)
+            .withClaim("nonce", nonce)
+            .withExpiresAt(getExpireAt())
+            .sign(algorithm)
+    }
+
+    fun verityNonce(jwt: String, nonce: String): Boolean {
+        val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
+        val verifier = JWT.require(algorithm)
+            .withIssuer("auth0")
+            .build()
+        val decodedJwt = verifier.verify(jwt)
+        val id = decodedJwt.getClaim("id").asString()
+        val result = nonceCacheService.get(id) == nonce
+        // どちらにせよ削除する
+        nonceCacheService.delete(id)
+        return result
+    }
+
     private fun getExpireAt(): Date {
         val calendar = Calendar.getInstance().apply {
             this.time = Date()
