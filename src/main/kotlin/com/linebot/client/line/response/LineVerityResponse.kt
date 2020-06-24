@@ -15,13 +15,13 @@ data class LineVerityResponse(
     @JsonProperty("iat")
     val iat: Long,
     @JsonProperty("auth_time")
-    val authTime: Long,
+    val authTime: Long?,
     @JsonProperty("nonce")
-    val nonce: String,
+    val nonce: String?,
     @JsonProperty("amr")
     val amr: List<String> = emptyList(),
     @JsonProperty("name")
-    val name: String,
+    val name: String?,
     @JsonProperty("picture")
-    val picture: String
+    val picture: String?
 )
