@@ -49,7 +49,7 @@ data class Notice(
     enum class Type(
         val code: Int
     ) {
-        TRAIN_DELAY(1),
-        CRON(2)
+        NORMAL(1),
+        SPECIAL(2);
     }
 }

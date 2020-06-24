@@ -14,4 +14,4 @@ pipelines:
             - gradle
           script:
             - bash ./gradlew -x test clean build
-            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$PROD_HEROKU_APP_NAME.git HEAD
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$PROD_HEROKU_APP_NAME.git HEAD

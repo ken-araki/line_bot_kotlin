@@ -7,8 +7,7 @@ enum class UriBuilder(
     val path: String
 ) {
     QIITA_USER_ITEMS("https://qiita.com/api/v2/users/{userId}/items"),
-    QIITA_ITEM_STOCK("https://qiita.com/api/v2/items/{itemId}/stockers"),
-    TRAIN_DELAY("https://tetsudo.rti-giken.jp/free/delay.json");
+    QIITA_ITEM_STOCK("https://qiita.com/api/v2/items/{itemId}/stockers");
 
     fun build(p: RequestParameter, pathvalue: String): String {
         return UriComponentsBuilder

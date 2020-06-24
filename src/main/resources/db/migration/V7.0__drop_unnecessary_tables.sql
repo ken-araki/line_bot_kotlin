@@ -1,0 +1,1 @@
+drop table train_delay_log;

@@ -1,6 +1,5 @@
 package com.linebot.service.notice
 
-import com.linebot.action.traindelay.TrainDelayTime
 import com.linebot.entity.Notice
 import com.linebot.entity.Notice.Type
 import com.linebot.repository.NoticeRepository
@@ -12,38 +11,33 @@ import org.springframework.transaction.annotation.Transactional
 class NoticeService(
     private val noticeRepository: NoticeRepository
 ) {
-
     @Transactional
-    fun insertOrUpdateTrainDelay(userId: String, time: TrainDelayTime): Notice {
-        val notice = noticeRepository.findByUserIdAndType(userId, Type.TRAIN_DELAY.code)
-                .firstOrNull()
-                ?: Notice(
-                        userId = userId,
-                        year = 0,
-                        month = 0,
-                        day = 0,
-                        dayOfWeek = 0,
-                        minute = time.minute,
-                        type = Notice.Type.TRAIN_DELAY.code,
-                        deleted = "0",
-                        createdAt = Utils.now()
-                )
-        notice.hour = time.hour
-        notice.minute = time.minute
+    fun insertOrUpdate(userId: String, hour: Int, minute: Int): Notice {
+        val notice = noticeRepository.findByUserIdAndType(userId, Type.NORMAL.code)
+            .firstOrNull()
+            ?: Notice(
+                userId = userId,
+                year = 0,
+                month = 0,
+                day = 0,
+                dayOfWeek = 0,
+                type = Type.NORMAL.code,
+                deleted = "0",
+                createdAt = Utils.now()
+            )
+        notice.apply {
+            this.hour = hour
+            this.minute = minute
+        }
         return noticeRepository.save(notice)
-    }
-
-    @Transactional(readOnly = true)
-    fun findTrainDelay(): List<Notice> {
-        return noticeRepository.findByTypeAndDeleted(Type.TRAIN_DELAY.code, "0")
     }
 
     @Transactional
     fun deleteNotice(userId: String) {
         noticeRepository.findByUserIdAndDeleted(userId, "0")
-                .forEach {
-                    it.deleted = "1"
-                    noticeRepository.save(it)
-                }
+            .forEach {
+                it.deleted = "1"
+                noticeRepository.save(it)
+            }
     }
 }
