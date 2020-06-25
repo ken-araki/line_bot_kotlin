@@ -3,7 +3,7 @@ package com.linebot.client.line.response
 import com.fasterxml.jackson.annotation.JsonProperty
 
 // https://developers.line.biz/ja/reference/social-api/#レスポンス-5
-data class LineVerityResponse(
+data class LineIdTokenVerityResponse(
     @JsonProperty("iss")
     val iss: String,
     @JsonProperty("sub")

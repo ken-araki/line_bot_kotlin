@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-// https://developers.line.biz/ja/docs/line-login/secure-login-process/#openidを使用して新規ユーザーを登録する
-// ここにしたがって認証を行おうと思ったが、LINEアプリ内の場合はlogin不要なので実施できず。
-// いったん諦めて、idTokenをLINE API (verity)に投げることで認証する
 @RestController
 @RequestMapping(path = ["/line"])
 class AuthController(
@@ -21,26 +18,19 @@ class AuthController(
     companion object {
         const val JWT = "X_LIFF_JWT"
         const val ACCESS_TOKEN = "X_LIFF_ACCESS_TOKEN"
-        const val NONCE = "X_LIFF_NONCE"
-        const val ONETIME_TOKEN = "X_LIFF_ONETIME_TOKEN"
     }
 
     val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
-    @PostMapping("/nonce")
-    @CrossOrigin
-    fun nonce(@RequestHeader("token") token: String): ValueResponse<Map<String, String>> {
-        return ValueResponse(lineService.nonce())
-    }
 
+    // LINE Developers #IDトークンを送信してユーザー情報を取得する
+    // https://developers.line.biz/ja/docs/liff/using-user-profile/#%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E6%83%85%E5%A0%B1%E3%82%92%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%A7%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B
     @PostMapping("/token")
     @CrossOrigin
     fun auth(
         @RequestHeader(JWT) jwt: String,
         @RequestHeader(ACCESS_TOKEN) accessToken: String,
-        @RequestHeader(ONETIME_TOKEN) onetimeToken: String,
-        @RequestHeader(NONCE) nonce: String,
         @RequestHeader("token") token: String
     ): ValueResponse<String> {
-        return ValueResponse(lineService.auth(jwt, accessToken, onetimeToken, nonce))
+        return ValueResponse(lineService.auth(jwt, accessToken))
     }
 }
