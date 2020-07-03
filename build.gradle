@@ -1,8 +1,7 @@
 buildscript {
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
-		classpath "org.jlleitschuh.gradle:ktlint-gradle:7.1.0"
-
+		classpath "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"
 	}
 }
 
@@ -32,7 +31,8 @@ sourceSets {
 
 compileKotlin {
 	kotlinOptions {
-		jvmTarget = "1.8"
+		// java14 is not supported yet
+		jvmTarget = "11"
 	}
 }
 
@@ -73,17 +73,3 @@ dependencies {
 
 // reports dir for bitbucket-pipelines
 def reportsDir = "${buildDir}/test-reports"
-
-// ktlint
-task ktlint(type: JavaExec, group: "verification") {
-	description = "Check Kotlin code style."
-	main = "com.pinterest.ktlint.Main"
-	classpath = configurations.ktlint
-	// not exec test modules
-	args "src/main/**/*.kt"
-	args "--reporter=plain", "--reporter=checkstyle,output=${reportsDir}/ktlint/ktlint.xml"
-	// to generate report in checkstyle format prepend following args:
-	// "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
-	// see https://github.com/pinterest/ktlint#usage for more
-}
-check.dependsOn ktlint
