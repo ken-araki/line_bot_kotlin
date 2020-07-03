@@ -47,13 +47,13 @@ class LineService(
             .sign(algorithm)
     }
 
-    fun decodeAuthJwt(jwt: String): String {
+    fun decodeAuthJwt(jwt: String): Pair<String, String> {
         val algorithm = Algorithm.HMAC256(lineAuthConfig.channelSecret)
         val verifier = JWT.require(algorithm)
             .withIssuer("auth0")
             .build()
-        val decodedJwt = verifier.verify(jwt)
-        return decodedJwt.getClaim("appUserId").asString()
+        val decoded = verifier.verify(jwt)
+        return decoded.getClaim("appUserId").asString() to decoded.getClaim("accessToken").asString()
     }
 
     private fun getExpireAt(): Date {

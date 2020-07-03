@@ -17,6 +17,11 @@ class BotUserService(
         return botUserRepository.findByDeleted("0")
     }
 
+    @Transactional(readOnly = true)
+    fun findActiveUserByAppUserId(appUserId: String): BotUser? {
+        return botUserRepository.findByAppUserIdAndDeleted(appUserId, "0")
+    }
+
     @Transactional
     fun insert(userId: String): BotUser {
         return botUserRepository.save(BotUser(
