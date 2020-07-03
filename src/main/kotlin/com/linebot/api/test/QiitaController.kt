@@ -1,4 +1,4 @@
-package com.linebot.controller.test
+package com.linebot.api.test
 
 import com.linebot.client.qiita.QiitaClient
 import com.linebot.model.qiita.Item

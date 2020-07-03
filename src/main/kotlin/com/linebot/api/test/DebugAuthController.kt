@@ -1,4 +1,4 @@
-package com.linebot.api.auth
+package com.linebot.api.test
 
 import com.linebot.api.response.ValueResponse
 import com.linebot.repository.BotUserRepository
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = ["/sample/line"])
+@RequestMapping(path = ["/test/line"])
 class DebugAuthController(
     private val lineService: LineService,
     private val botUserRepository: BotUserRepository

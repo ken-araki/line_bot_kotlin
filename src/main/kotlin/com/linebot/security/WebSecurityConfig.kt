@@ -52,7 +52,7 @@ class WebSecurityConfig(
 
     override fun configure(web: WebSecurity) {
         web.ignoring()
-            .antMatchers("/self/keep", "/retroactive/**", "/sample/line/token", "/line/token", "/callback")
+            .antMatchers("/self/keep", "/retroactive/**", "/test/**", "/line/token", "/callback")
     }
 
     override fun configure(http: HttpSecurity) {

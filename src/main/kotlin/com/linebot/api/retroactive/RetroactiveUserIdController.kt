@@ -1,4 +1,4 @@
-package com.linebot.controller.retroactive
+package com.linebot.api.retroactive
 
 import com.linebot.api.response.SuccessResponse
 import com.linebot.repository.BotUserRepository

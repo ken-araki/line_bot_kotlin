@@ -1,4 +1,4 @@
-package com.linebot.controller.test
+package com.linebot.api.test
 
 import com.linebot.model.UserStatus
 import com.linebot.service.cache.UserStatusCacheService

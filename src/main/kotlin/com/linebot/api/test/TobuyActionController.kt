@@ -1,4 +1,4 @@
-package com.linebot.controller.test
+package com.linebot.api.test
 
 import com.linebot.action.ActionHandler
 import com.linebot.util.Utils
