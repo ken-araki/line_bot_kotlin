@@ -25,7 +25,7 @@ class DebugAuthController(
     fun auth(
         @RequestHeader("user_id") userId: String
     ): ValueResponse<String> {
-        val user = botUserRepository.findByUserId(userId) ?:  throw RuntimeException()
+        val user = botUserRepository.findByUserId(userId) ?: throw RuntimeException()
         return ValueResponse(lineService.encodeAuthJwt(user, "sample_access_token"))
     }
 }

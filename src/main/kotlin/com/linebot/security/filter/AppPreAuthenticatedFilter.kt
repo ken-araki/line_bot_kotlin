@@ -1,9 +1,9 @@
 package com.linebot.security.filter
 
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter
 import javax.servlet.http.HttpServletRequest
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter
 
-class AppPreAuthenticatedFilter: AbstractPreAuthenticatedProcessingFilter() {
+class AppPreAuthenticatedFilter : AbstractPreAuthenticatedProcessingFilter() {
     companion object {
         const val TOKEN_HEADER = "X_ARK_TOKEN"
         const val AUTHENTICATION_HEADER = "X_ARK_AUTHENTICATION"

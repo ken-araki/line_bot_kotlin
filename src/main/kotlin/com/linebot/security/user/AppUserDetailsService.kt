@@ -3,18 +3,18 @@ package com.linebot.security.user
 import com.linebot.config.PropertiesConfig
 import com.linebot.service.line.LineService
 import com.linebot.service.user.BotUserService
+import javax.security.auth.message.AuthException
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken
 import org.springframework.stereotype.Component
-import javax.security.auth.message.AuthException
 
 @Component
 class AppUserDetailsService(
     private val lineService: LineService,
     private val botUserService: BotUserService,
     private val propertiesConfig: PropertiesConfig
-): AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
+) : AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
     override fun loadUserDetails(token: PreAuthenticatedAuthenticationToken): UserDetails {
         // サーバ、フロント間で取り決めたtokenが必須
         val authToken = token.credentials as String
