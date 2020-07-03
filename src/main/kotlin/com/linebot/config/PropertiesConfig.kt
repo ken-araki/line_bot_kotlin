@@ -9,7 +9,5 @@ data class PropertiesConfig(
     var id: String? = null,
     var ownHost: String? = null,
     var ownPort: String? = null,
-    var ownUserMid: String? = null,
-    var token: String? = null,
-    var redirectUri: String? = null
+    var token: String? = null
 )
