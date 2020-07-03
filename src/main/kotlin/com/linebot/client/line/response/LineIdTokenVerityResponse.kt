@@ -19,7 +19,7 @@ data class LineIdTokenVerityResponse(
     @JsonProperty("nonce")
     val nonce: String?,
     @JsonProperty("amr")
-    val amr: List<String> = emptyList(),
+    val amr: List<String>?,
     @JsonProperty("name")
     val name: String?,
     @JsonProperty("picture")
