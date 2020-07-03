@@ -19,12 +19,12 @@ class AppUserDetailsService(
         // サーバ、フロント間で取り決めたtokenが必須
         val authToken = token.credentials as String
         if (propertiesConfig.token != authToken) {
-            throw AuthException("auth tokenが不正です")
+            throw AuthException("invalid auth token. header: $authToken.")
         }
         // jwt token を利用した認証を行う
         val jwtToken = token.principal as String
         val (appUserId, accessToken) = lineService.decodeAuthJwt(jwtToken)
-        val user = botUserService.findActiveUserByAppUserId(appUserId) ?: throw AuthException("jwt tokenが不正です")
+        val user = botUserService.findActiveUserByAppUserId(appUserId) ?: throw AuthException("invalid jwt token.")
         return AppUserDetail()
             .apply {
                 this.user = AppUser(

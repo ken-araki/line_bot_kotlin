@@ -4,7 +4,7 @@ import com.linebot.api.response.ListResponse
 import com.linebot.api.response.SuccessResponse
 import com.linebot.api.response.TobuyDto
 import com.linebot.config.PropertiesConfig
-import com.linebot.security.user.AppUser
+import com.linebot.security.user.AppUserDetail
 import com.linebot.service.tobuy.TobuyService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -24,8 +24,8 @@ class TobuyController(
 ) {
     val log: Logger = LoggerFactory.getLogger(TobuyController::class.java)
     @GetMapping
-    fun get(@AuthenticationPrincipal appUser: AppUser): ListResponse<TobuyDto> {
-        val list = appUser.appUserId.let { mid ->
+    fun get(@AuthenticationPrincipal appUser: AppUserDetail): ListResponse<TobuyDto> {
+        val list = appUser.user.appUserId.let { mid ->
             tobuyService.findByIsCompleted(mid, "0")
                 .map { TobuyDto(it.id!!, it.goods!!) }
         }
@@ -35,16 +35,16 @@ class TobuyController(
 
     @PostMapping(path = ["/add"])
     fun add(
-        @AuthenticationPrincipal appUser: AppUser,
+        @AuthenticationPrincipal appUser: AppUserDetail,
         @RequestParam(name = "goods") goods: String
     ): SuccessResponse {
-        tobuyService.insertByGoods(appUser.appUserId, goods)
+        tobuyService.insertByGoods(appUser.user.appUserId, goods)
         return SuccessResponse()
     }
 
     @PostMapping(path = ["/buy"])
     fun add(
-        @AuthenticationPrincipal appUser: AppUser,
+        @AuthenticationPrincipal appUser: AppUserDetail,
         @RequestBody ids: List<Int>
     ): SuccessResponse {
         tobuyService.updateCompletedById(ids)
