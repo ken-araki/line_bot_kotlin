@@ -9,7 +9,6 @@ import com.linebot.service.tobuy.TobuyService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,7 +24,6 @@ class TobuyController(
 ) {
     val log: Logger = LoggerFactory.getLogger(TobuyController::class.java)
     @GetMapping
-    @CrossOrigin
     fun get(@AuthenticationPrincipal appUser: AppUser): ListResponse<TobuyDto> {
         val list = appUser.appUserId.let { mid ->
             tobuyService.findByIsCompleted(mid, "0")
@@ -36,7 +34,6 @@ class TobuyController(
     }
 
     @PostMapping(path = ["/add"])
-    @CrossOrigin
     fun add(
         @AuthenticationPrincipal appUser: AppUser,
         @RequestParam(name = "goods") goods: String
@@ -46,7 +43,6 @@ class TobuyController(
     }
 
     @PostMapping(path = ["/buy"])
-    @CrossOrigin
     fun add(
         @AuthenticationPrincipal appUser: AppUser,
         @RequestBody ids: List<Int>

@@ -9,5 +9,6 @@ data class PropertiesConfig(
     var id: String? = null,
     var ownHost: String? = null,
     var ownPort: String? = null,
-    var token: String? = null
+    var token: String? = null,
+    var allowedOriginUri: String? = null
 )

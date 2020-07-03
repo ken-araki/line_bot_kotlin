@@ -19,6 +19,9 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +49,18 @@ class WebSecurityConfig(
             setAuthenticationFailureHandler(UserAuthenticationFailureHandler())
         }
 
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val corsConfiguration = CorsConfiguration().apply {
+            addAllowedOrigin(propertiesConfig.allowedOriginUri)
+            addAllowedHeader(CorsConfiguration.ALL)
+            addAllowedMethod(CorsConfiguration.ALL)
+            allowCredentials = true
+        }
+        return UrlBasedCorsConfigurationSource().apply {
+            registerCorsConfiguration("/**", corsConfiguration)
+        }
+    }
+
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.authenticationProvider(preAuthenticatedAuthenticationProvider())
     }
@@ -62,6 +77,8 @@ class WebSecurityConfig(
             .antMatchers("/api/v*/**").authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(Http401UnauthorizedEndpoint())
-        // @TODO: cors対策を入れる
+            .and()
+            .cors()
+            .configurationSource(corsConfigurationSource())
     }
 }
